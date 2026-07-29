@@ -16,8 +16,10 @@
     import AppHead from '@/components/AppHead.svelte';
     import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
     import { Badge } from '@/components/ui/badge';
+    import { Button } from '@/components/ui/button';
     import { getEcho } from '@/lib/echo';
     import { pairing } from '@/routes/whatsapp';
+    import { show as showAiSettings } from '@/routes/whatsapp/ai-settings';
     import { show } from '@/routes/whatsapp/chats';
 
     type Conversation = {
@@ -91,6 +93,16 @@
 <AppHead title="WhatsApp" />
 
 <div class="flex h-full flex-1 flex-col gap-4 p-4">
+    <div class="flex justify-end">
+        <Button asChild variant="outline" size="sm">
+            {#snippet children(props)}
+                <Link {...props} href={showAiSettings()}
+                    >AI auto-reply settings</Link
+                >
+            {/snippet}
+        </Button>
+    </div>
+
     {#if session.status !== 'ready'}
         <Alert>
             <AlertTitle>Not connected</AlertTitle>

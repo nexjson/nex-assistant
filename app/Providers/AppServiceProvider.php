@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Listeners\DispatchWhatsappAutoReply;
 use App\Listeners\WhatsAppSessionEventSubscriber;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Kstmostofa\LaravelWhatsApp\Events\Web\MessageReceived;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -58,5 +60,6 @@ class AppServiceProvider extends ServiceProvider
     protected function configureWhatsAppEvents(): void
     {
         Event::subscribe(WhatsAppSessionEventSubscriber::class);
+        Event::listen(MessageReceived::class, DispatchWhatsappAutoReply::class);
     }
 }
