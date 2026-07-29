@@ -3,6 +3,7 @@
     import BookOpen from 'lucide-svelte/icons/book-open';
     import FolderGit2 from 'lucide-svelte/icons/folder-git-2';
     import LayoutGrid from 'lucide-svelte/icons/layout-grid';
+    import MessageCircle from 'lucide-svelte/icons/message-circle';
     import type { Snippet } from 'svelte';
     import AppLogo from '@/components/AppLogo.svelte';
     import NavFooter from '@/components/NavFooter.svelte';
@@ -19,6 +20,7 @@
     } from '@/components/ui/sidebar';
     import { toUrl } from '@/lib/utils';
     import { dashboard } from '@/routes';
+    import { index as whatsappIndex } from '@/routes/whatsapp';
     import type { NavItem } from '@/types';
 
     let {
@@ -32,6 +34,11 @@
             title: 'Dashboard',
             href: dashboard(),
             icon: LayoutGrid,
+        },
+        {
+            title: 'WhatsApp',
+            href: whatsappIndex(),
+            icon: MessageCircle,
         },
     ];
 

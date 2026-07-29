@@ -11,9 +11,11 @@
     "require": {
         "php": "^8.3",
         "inertiajs/inertia-laravel": "^3.0",
+        "kstmostofa/laravel-whatsapp": "^1.0",
         "laravel/chisel": "^0.1.0",
         "laravel/fortify": "^1.37.2",
         "laravel/framework": "^13.17",
+        "laravel/reverb": "^1.0",
         "laravel/tinker": "^3.0",
         "laravel/wayfinder": "^0.1.14"
     },
@@ -53,7 +55,7 @@
         ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
-            "npx concurrently -c \"#93c5fd,#c4b5fd,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1 --timeout=0\" \"npm run dev\" --names='server,queue,vite'"
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fdba74,#86efac,#f9a8d4\" \"php artisan serve\" \"php artisan queue:listen --tries=1 --timeout=0\" \"npm run dev\" \"php artisan reverb:start\" \"php artisan whatsapp:web:listen main\" --names='server,queue,vite,reverb,wa-listen'"
         ],
         "lint": [
             "pint --parallel"
