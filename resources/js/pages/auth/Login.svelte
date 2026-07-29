@@ -18,6 +18,7 @@
     import { Spinner } from '@/components/ui/spinner';
     import { store } from '@/routes/login';
     import { request } from '@/routes/password';
+    import { register } from '@/routes';
 
     let {
         status = '',
@@ -94,3 +95,8 @@
         </div>
     {/snippet}
 </Form>
+
+<div class="mt-4 space-x-1 text-center text-sm text-muted-foreground">
+    <span>Don't have an account?</span>
+    <TextLink href={register()}>Sign up</TextLink>
+</div>
