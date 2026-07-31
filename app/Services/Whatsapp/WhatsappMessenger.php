@@ -47,6 +47,22 @@ class WhatsappMessenger
     }
 
     /**
+     * List the session's chats (id, display name, group flag, ...), used to
+     * resolve a human-readable name for a chat_id. Empty when the sidecar
+     * isn't reachable, so callers should treat a missing name as normal.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function chats(): array
+    {
+        try {
+            return WhatsApp::web($this->sessionId)->chats();
+        } catch (SidecarException) {
+            return [];
+        }
+    }
+
+    /**
      * @return array<string, mixed>
      */
     public function sendText(string $to, string $body): array

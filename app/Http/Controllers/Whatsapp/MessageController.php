@@ -13,8 +13,10 @@ use Kstmostofa\LaravelWhatsApp\Models\WaMessage;
 
 class MessageController extends Controller
 {
-    public function show(string $chatId): Response
+    public function show(string $chatId, WhatsappMessenger $messenger): Response
     {
+        $contactName = collect($messenger->chats())->firstWhere('id', $chatId)['name'] ?? null;
+
         $messages = WaMessage::query()
             ->where('backend', 'web')
             ->where(fn ($query) => $query->where('from_id', $chatId)->orWhere('to_id', $chatId))
@@ -33,6 +35,7 @@ class MessageController extends Controller
 
         return Inertia::render('Whatsapp/Thread', [
             'chatId' => $chatId,
+            'contactName' => $contactName,
             'messages' => $messages,
         ]);
     }

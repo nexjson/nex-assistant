@@ -23,16 +23,23 @@ class ConversationController extends Controller
             ->groupBy(DB::raw($partnerExpression))
             ->pluck('id');
 
+        $names = collect($messenger->chats())->pluck('name', 'id');
+
         $conversations = WaMessage::query()
             ->whereIn('id', $latestMessageIds)
             ->orderByDesc('wa_timestamp')
             ->get()
-            ->map(fn (WaMessage $message) => [
-                'chatId' => $message->direction === 'outbound' ? $message->to_id : $message->from_id,
-                'lastBody' => $message->body,
-                'lastAt' => $message->wa_timestamp?->toIso8601String(),
-                'direction' => $message->direction,
-            ]);
+            ->map(function (WaMessage $message) use ($names) {
+                $chatId = $message->direction === 'outbound' ? $message->to_id : $message->from_id;
+
+                return [
+                    'chatId' => $chatId,
+                    'contactName' => $names->get($chatId),
+                    'lastBody' => $message->body,
+                    'lastAt' => $message->wa_timestamp?->toIso8601String(),
+                    'direction' => $message->direction,
+                ];
+            });
 
         return Inertia::render('Whatsapp/Index', [
             'conversations' => $conversations,

@@ -63,6 +63,20 @@ test('the job generates and sends a reply when enabled', function () {
     WhatsappAssistant::assertPrompted('hello');
 });
 
+test('a leaked tool-call in the model response is discarded instead of sent', function () {
+    WhatsappAiSetting::current()->update([
+        'auto_reply_enabled' => true,
+        'openrouter_model' => 'meta-llama/llama-3.1-8b-instruct',
+        'openrouter_api_key' => 'sk-or-test',
+    ]);
+
+    WhatsappAssistant::fake(['<function=SearchWhatsappHistoryTool>{"query": "onic", "limit": 5}</function>']);
+
+    $this->mock(WhatsappMessenger::class)->shouldNotReceive('sendText');
+
+    (new GenerateWhatsappAutoReply('123@c.us', 'hello'))->handle(app(WhatsappMessenger::class));
+});
+
 test('the instructions include the owner profile when configured', function () {
     $settings = tap(WhatsappAiSetting::current())->update([
         'owner_name' => 'Hilman',

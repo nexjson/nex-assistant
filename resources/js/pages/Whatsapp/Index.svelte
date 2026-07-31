@@ -26,6 +26,7 @@
 
     type Conversation = {
         chatId: string;
+        contactName: string | null;
         lastBody: string | null;
         lastAt: string | null;
         direction: string;
@@ -54,7 +55,13 @@
             existing.lastAt = at;
             existing.direction = direction;
         } else {
-            items.unshift({ chatId, lastBody: body, lastAt: at, direction });
+            items.unshift({
+                chatId,
+                contactName: null,
+                lastBody: body,
+                lastAt: at,
+                direction,
+            });
         }
 
         items = [...items].sort((a, b) =>
@@ -140,7 +147,9 @@
                 class="flex items-center justify-between gap-4 p-4 hover:bg-accent"
             >
                 <div class="min-w-0 flex-1">
-                    <p class="truncate font-medium">{conversation.chatId}</p>
+                    <p class="truncate font-medium">
+                        {conversation.contactName ?? conversation.chatId}
+                    </p>
                     <p class="truncate text-sm text-muted-foreground">
                         {conversation.direction === 'outbound'
                             ? 'You: '

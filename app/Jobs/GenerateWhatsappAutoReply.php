@@ -44,6 +44,16 @@ class GenerateWhatsappAutoReply implements ShouldQueue
             $response = (new WhatsappAssistant($settings, $this->chatId, $this->body))
                 ->prompt($this->body, provider: 'openrouter', model: $settings->openrouter_model);
 
+            if ($this->looksLikeLeakedToolCall($response->text)) {
+                Log::warning('WhatsApp auto-reply discarded: model emitted an unexecuted tool-call as plain text instead of a real reply', [
+                    'chat_id' => $this->chatId,
+                    'model' => $settings->openrouter_model,
+                    'text' => $response->text,
+                ]);
+
+                return;
+            }
+
             $messenger->sendText($this->chatId, $response->text);
         } catch (AiException|SidecarException $e) {
             Log::warning('WhatsApp auto-reply failed', [
@@ -51,5 +61,16 @@ class GenerateWhatsappAutoReply implements ShouldQueue
                 'error' => $e->getMessage(),
             ]);
         }
+    }
+
+    /**
+     * Some models don't reliably support native tool calling and instead
+     * write out a text imitation of a function call (e.g.
+     * `<function=SearchWhatsappHistoryTool>{...}</function>`) as their final
+     * answer. That syntax must never reach the end user on WhatsApp.
+     */
+    private function looksLikeLeakedToolCall(string $text): bool
+    {
+        return (bool) preg_match('/<\/?function[\s=]/i', $text);
     }
 }
