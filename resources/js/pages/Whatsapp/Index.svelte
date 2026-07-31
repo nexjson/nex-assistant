@@ -12,11 +12,13 @@
 </script>
 
 <script lang="ts">
-    import { Link } from '@inertiajs/svelte';
+    import { Form, Link } from '@inertiajs/svelte';
+    import SessionController from '@/actions/App/Http/Controllers/Whatsapp/SessionController';
     import AppHead from '@/components/AppHead.svelte';
     import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
     import { Badge } from '@/components/ui/badge';
     import { Button } from '@/components/ui/button';
+    import { Spinner } from '@/components/ui/spinner';
     import { getEcho } from '@/lib/echo';
     import { pairing } from '@/routes/whatsapp';
     import { show as showAiSettings } from '@/routes/whatsapp/ai-settings';
@@ -93,7 +95,7 @@
 <AppHead title="WhatsApp" />
 
 <div class="flex h-full flex-1 flex-col gap-4 p-4">
-    <div class="flex justify-end">
+    <div class="flex justify-end gap-2">
         <Button asChild variant="outline" size="sm">
             {#snippet children(props)}
                 <Link {...props} href={showAiSettings()}
@@ -101,6 +103,22 @@
                 >
             {/snippet}
         </Button>
+
+        {#if session.status === 'ready'}
+            <Form {...SessionController.destroy.form()}>
+                {#snippet children({ processing })}
+                    <Button
+                        type="submit"
+                        variant="destructive"
+                        size="sm"
+                        disabled={processing}
+                    >
+                        {#if processing}<Spinner />{/if}
+                        Switch WhatsApp account
+                    </Button>
+                {/snippet}
+            </Form>
+        {/if}
     </div>
 
     {#if session.status !== 'ready'}

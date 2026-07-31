@@ -74,7 +74,7 @@ class GenerateWhatsappAutoReply implements ShouldQueue
         return [
             [
                 'role' => 'system',
-                'content' => 'You are a helpful WhatsApp assistant replying on behalf of the account owner. Keep replies concise and friendly.',
+                'content' => 'You are a helpful WhatsApp assistant replying on behalf of the account owner. Keep replies concise and friendly. Always reply in the same language the user wrote their most recent message in, including regional Indonesian languages such as Sundanese or Javanese — do not switch to Indonesian or English unless the user did.',
             ],
             ...$history,
         ];

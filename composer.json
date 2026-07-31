@@ -55,6 +55,7 @@
         ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
+            "@php artisan whatsapp:sidecar:ensure",
             "npx concurrently -c \"#93c5fd,#c4b5fd,#fdba74,#86efac,#f9a8d4\" \"php artisan serve\" \"php artisan queue:listen --tries=1 --timeout=0\" \"npm run dev\" \"php artisan reverb:start\" \"php artisan whatsapp:web:listen main\" --names='server,queue,vite,reverb,wa-listen'"
         ],
         "lint": [

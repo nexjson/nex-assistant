@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(php artisan tinker --execute \"echo json_encode\\(\\(new Kstmostofa\\\\LaravelWhatsApp\\\\Web\\\\WebClient\\(config\\('laravel-whatsapp.web'\\)\\)\\)->ping\\(\\) ? ['reachable'=>true] : ['reachable'=>false]\\);\")",
+      "PowerShell(php artisan tinker --execute \"$c = app\\(Kstmostofa\\\\LaravelWhatsApp\\\\Web\\\\WebClient::class\\); echo json_encode\\(['reachable'=>$c->ping\\(\\)]\\);\")",
+      "PowerShell(php artisan tinker --execute \"echo json_encode\\(app\\(App\\\\Services\\\\Whatsapp\\\\WhatsappMessenger::class\\)->state\\(\\)\\);\")",
+      "PowerShell(php artisan tinker --execute \"echo json_encode\\(Kstmostofa\\\\LaravelWhatsApp\\\\Models\\\\WaMessage::query\\(\\)->latest\\('id'\\)->limit\\(5\\)->get\\(['id','direction','from_id','to_id','body','wa_timestamp']\\)->toArray\\(\\)\\);\")",
+      "PowerShell(php artisan tinker --execute \"echo json_encode\\(DB::table\\('failed_jobs'\\)->latest\\('id'\\)->limit\\(5\\)->get\\(['uuid','queue','exception']\\)\\);\")",
+      "PowerShell(php artisan tinker --execute \"echo json_encode\\(DB::table\\('jobs'\\)->get\\(['id','queue','attempts','created_at','payload']\\)->map\\(fn\\($j\\) => ['id'=>$j->id,'queue'=>$j->queue,'attempts'=>$j->attempts,'created_at'=>$j->created_at,'job'=>json_decode\\($j->payload\\)->displayName ?? null]\\)\\);\")",
+      "PowerShell(php artisan tinker --execute \"echo DB::table\\('jobs'\\)->count\\(\\);\")",
+      "PowerShell(php artisan tinker --execute \"event\\(new Kstmostofa\\\\LaravelWhatsApp\\\\Events\\\\Web\\\\MessageReceived\\('main', ['message' => ['id' => 'diag-test-1', 'from' => '000000000000@c.us', 'to' => 'main', 'body' => 'test diagnostic pesan', 'type' => 'chat', 'fromMe' => false, 'timestamp' => time\\(\\)]]\\)\\); echo 'dispatched';\")",
+      "PowerShell(php artisan tinker --execute \"echo DB::table\\('jobs'\\)->count\\(\\) . ' pending / ' . DB::table\\('failed_jobs'\\)->count\\(\\) . ' failed';\")",
+      "PowerShell(php artisan tinker --execute \"echo json_encode\\(Kstmostofa\\\\LaravelWhatsApp\\\\Models\\\\WaMessage::query\\(\\)->latest\\('id'\\)->limit\\(3\\)->get\\(['id','direction','from_id','to_id','body','wa_timestamp']\\)->toArray\\(\\)\\);\")",
+      "PowerShell(php artisan tinker --execute \"echo json_encode\\(Kstmostofa\\\\LaravelWhatsApp\\\\Models\\\\WaMessage::query\\(\\)->latest\\('id'\\)->limit\\(5\\)->get\\(['id','direction','from_id','to_id','body','chat_id','wa_timestamp']\\)->toArray\\(\\)\\);\")",
+      "PowerShell(php artisan tinker --execute \"echo json_encode\\(Kstmostofa\\\\LaravelWhatsApp\\\\Models\\\\WaMessage::query\\(\\)->latest\\('id'\\)->limit\\(5\\)->get\\(['id','direction','from_id','to_id','body','wa_message_id','wa_timestamp']\\)->toArray\\(\\)\\);\")",
+      "PowerShell(Stop-Process -Id 18704 -Force)",
+      "PowerShell(Start-Process -FilePath \"php\" -ArgumentList \"artisan\",\"whatsapp:web:listen\",\"main\" -WorkingDirectory \"d:\\\\webapp\\\\nex-assistant\" -WindowStyle Hidden)",
+      "PowerShell(Get-NetTCPConnection -RemotePort 3000 -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-Process -Id 20624,2700 -ErrorAction SilentlyContinue)",
+      "PowerShell(php artisan tinker --execute \"echo json_encode\\(Kstmostofa\\\\LaravelWhatsApp\\\\Models\\\\WaMessage::query\\(\\)->latest\\('id'\\)->limit\\(3\\)->get\\(['id','direction','from_id','chat_id','body','wa_timestamp']\\)->toArray\\(\\)\\);\")",
+      "PowerShell(php artisan tinker --execute \"echo json_encode\\(Kstmostofa\\\\LaravelWhatsApp\\\\Models\\\\WaMessage::query\\(\\)->latest\\('id'\\)->limit\\(4\\)->get\\(['id','direction','from_id','chat_id','body']\\)->toArray\\(\\)\\);\")"
+    ]
+  }
+}
