@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Whatsapp;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Whatsapp\StoreMessageRequest;
 use App\Services\Whatsapp\WhatsappMessenger;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Kstmostofa\LaravelWhatsApp\Exceptions\SidecarException;
@@ -37,14 +37,10 @@ class MessageController extends Controller
         ]);
     }
 
-    public function store(Request $request, string $chatId, WhatsappMessenger $messenger): RedirectResponse
+    public function store(StoreMessageRequest $request, string $chatId, WhatsappMessenger $messenger): RedirectResponse
     {
-        $validated = $request->validate([
-            'body' => ['required', 'string', 'max:4096'],
-        ]);
-
         try {
-            $messenger->sendText($chatId, $validated['body']);
+            $messenger->sendText($chatId, $request->validated('body'));
         } catch (SidecarException $e) {
             return back()->withErrors(['body' => "Could not send message: {$e->getMessage()}"]);
         }

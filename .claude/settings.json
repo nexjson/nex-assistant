@@ -18,7 +18,12 @@
       "PowerShell(Get-NetTCPConnection -RemotePort 3000 -ErrorAction SilentlyContinue)",
       "PowerShell(Get-Process -Id 20624,2700 -ErrorAction SilentlyContinue)",
       "PowerShell(php artisan tinker --execute \"echo json_encode\\(Kstmostofa\\\\LaravelWhatsApp\\\\Models\\\\WaMessage::query\\(\\)->latest\\('id'\\)->limit\\(3\\)->get\\(['id','direction','from_id','chat_id','body','wa_timestamp']\\)->toArray\\(\\)\\);\")",
-      "PowerShell(php artisan tinker --execute \"echo json_encode\\(Kstmostofa\\\\LaravelWhatsApp\\\\Models\\\\WaMessage::query\\(\\)->latest\\('id'\\)->limit\\(4\\)->get\\(['id','direction','from_id','chat_id','body']\\)->toArray\\(\\)\\);\")"
+      "PowerShell(php artisan tinker --execute \"echo json_encode\\(Kstmostofa\\\\LaravelWhatsApp\\\\Models\\\\WaMessage::query\\(\\)->latest\\('id'\\)->limit\\(4\\)->get\\(['id','direction','from_id','chat_id','body']\\)->toArray\\(\\)\\);\")",
+      "PowerShell(php artisan test --compact --filter=\"AiSettingsTest|SendMessageTest|AutoReplyTest\")",
+      "PowerShell(php artisan test --compact tests/Feature/Whatsapp/AiSettingsTest.php tests/Feature/Whatsapp/SendMessageTest.php tests/Feature/Whatsapp/AutoReplyTest.php)",
+      "Bash(php -r \"echo 'x';\")",
+      "PowerShell(php artisan list mcp)",
+      "mcp__laravel-boost__search-docs"
     ]
   }
 }
