@@ -14,8 +14,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool $auto_reply_enabled
  * @property string $openrouter_model
  * @property string|null $openrouter_api_key
+ * @property string|null $owner_name
+ * @property string|null $owner_address
+ * @property string|null $current_activity
  */
-#[Fillable(['auto_reply_enabled', 'openrouter_model', 'openrouter_api_key'])]
+#[Fillable(['auto_reply_enabled', 'openrouter_model', 'openrouter_api_key', 'owner_name', 'owner_address', 'current_activity'])]
 #[Hidden(['openrouter_api_key'])]
 class WhatsappAiSetting extends Model
 {
@@ -24,6 +27,7 @@ class WhatsappAiSetting extends Model
         return [
             'auto_reply_enabled' => 'boolean',
             'openrouter_api_key' => 'encrypted',
+            'owner_address' => 'encrypted',
         ];
     }
 

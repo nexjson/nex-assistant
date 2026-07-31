@@ -36,11 +36,17 @@
             autoReplyEnabled: boolean;
             openrouterModel: string;
             hasApiKey: boolean;
+            ownerName: string | null;
+            ownerAddress: string | null;
+            currentActivity: string | null;
         };
     } = $props();
 
     let autoReplyEnabled = $state(settings.autoReplyEnabled);
     let openrouterModel = $state(settings.openrouterModel);
+    let ownerName = $state(settings.ownerName ?? '');
+    let ownerAddress = $state(settings.ownerAddress ?? '');
+    let currentActivity = $state(settings.currentActivity ?? '');
 
     const modelPresets = [
         'anthropic/claude-sonnet-4.5',
@@ -65,6 +71,9 @@
             ...data,
             auto_reply_enabled: autoReplyEnabled,
             openrouter_model: openrouterModel,
+            owner_name: ownerName,
+            owner_address: ownerAddress,
+            current_activity: currentActivity,
         })}
         options={{ preserveScroll: true }}
         class="max-w-xl space-y-6"
@@ -80,6 +89,41 @@
                 >
             </div>
             <InputError message={errors.auto_reply_enabled} />
+
+            <div class="grid gap-2">
+                <Label for="owner_name">Your name</Label>
+                <Input
+                    id="owner_name"
+                    bind:value={ownerName}
+                    placeholder="e.g. Hilman"
+                />
+                <InputError message={errors.owner_name} />
+            </div>
+
+            <div class="grid gap-2">
+                <Label for="owner_address">Your address</Label>
+                <Input
+                    id="owner_address"
+                    bind:value={ownerAddress}
+                    placeholder="e.g. Jakarta, Indonesia"
+                />
+                <InputError message={errors.owner_address} />
+            </div>
+
+            <div class="grid gap-2">
+                <Label for="current_activity">Current activity / status</Label>
+                <Input
+                    id="current_activity"
+                    bind:value={currentActivity}
+                    placeholder="e.g. In a meeting until 3 PM"
+                />
+                <p class="text-sm text-muted-foreground">
+                    Update this whenever it changes so the assistant can
+                    answer "where are you" or "what are you doing" questions
+                    accurately.
+                </p>
+                <InputError message={errors.current_activity} />
+            </div>
 
             <div class="grid gap-2">
                 <Label for="openrouter_model">OpenRouter model</Label>

@@ -69,3 +69,29 @@ test('enabling auto-reply without any api key fails validation', function () {
     $response->assertSessionHasErrors('openrouter_api_key');
     expect(WhatsappAiSetting::current()->auto_reply_enabled)->toBeFalse();
 });
+
+test('the owner profile can be updated and is returned by the settings page', function () {
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($user)->put(route('whatsapp.ai-settings.update'), [
+        'auto_reply_enabled' => false,
+        'openrouter_model' => 'anthropic/claude-sonnet-4.5',
+        'owner_name' => 'Hilman',
+        'owner_address' => 'Jakarta, Indonesia',
+        'current_activity' => 'In a meeting until 3 PM',
+    ]);
+
+    $response->assertSessionHasNoErrors();
+
+    $settings = WhatsappAiSetting::current();
+    expect($settings->owner_name)->toBe('Hilman');
+    expect($settings->owner_address)->toBe('Jakarta, Indonesia');
+    expect($settings->current_activity)->toBe('In a meeting until 3 PM');
+
+    $this->actingAs($user)->get(route('whatsapp.ai-settings.show'))
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('settings.ownerName', 'Hilman')
+            ->where('settings.ownerAddress', 'Jakarta, Indonesia')
+            ->where('settings.currentActivity', 'In a meeting until 3 PM')
+        );
+});

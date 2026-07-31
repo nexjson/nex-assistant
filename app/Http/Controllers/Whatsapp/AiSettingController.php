@@ -20,6 +20,9 @@ class AiSettingController extends Controller
                 'autoReplyEnabled' => $settings->auto_reply_enabled,
                 'openrouterModel' => $settings->openrouter_model,
                 'hasApiKey' => filled($settings->openrouter_api_key),
+                'ownerName' => $settings->owner_name,
+                'ownerAddress' => $settings->owner_address,
+                'currentActivity' => $settings->current_activity,
             ],
         ]);
     }
@@ -32,6 +35,9 @@ class AiSettingController extends Controller
             'auto_reply_enabled' => $validated['auto_reply_enabled'],
             'openrouter_model' => $validated['openrouter_model'],
             'openrouter_api_key' => $request->resolvedApiKey(),
+            'owner_name' => $validated['owner_name'] ?? null,
+            'owner_address' => $validated['owner_address'] ?? null,
+            'current_activity' => $validated['current_activity'] ?? null,
         ]);
 
         return back();

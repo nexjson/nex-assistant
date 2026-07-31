@@ -19,6 +19,9 @@ class UpdateAiSettingRequest extends FormRequest
             'auto_reply_enabled' => ['required', 'boolean'],
             'openrouter_model' => ['required', 'string', 'max:255'],
             'openrouter_api_key' => ['nullable', 'string', 'max:255'],
+            'owner_name' => ['nullable', 'string', 'max:255'],
+            'owner_address' => ['nullable', 'string', 'max:255'],
+            'current_activity' => ['nullable', 'string', 'max:255'],
         ];
     }
 
